@@ -1,0 +1,17 @@
+## PROJECT CONTEXT: Pemaro SA E-commerce
+Estamos desenvolvendo uma plataforma de venda de pedras (Mármore/Granito).
+O sistema é composto por:
+1. **Mobile:** Flutter (Android/iOS).
+2. **Backend/Web:** Node.js (API para integração).
+3. **Database:** Firebase Firestore (Espelho dos dados).
+4. **ERP:** Odoo (Fonte da verdade - Master).
+
+## TECH STACK & SKILLS
+- **Mobile:** Flutter, Dart, Riverpod (Gestão de Estado), GoRouter.
+- **Backend:** Node.js, Express, XML-RPC (para Odoo).
+- **Database:** Firebase Firestore, Cloud Functions.
+
+## GOLDEN RULES
+1. **Single Source of Truth:** O Odoo é o dono do estoque e preço.
+2. **Write Policy:** O App Mobile NUNCA escreve no Odoo. Ele escreve no Firebase.
+3. **Language:** Comentários em Português. Código em Inglês.
