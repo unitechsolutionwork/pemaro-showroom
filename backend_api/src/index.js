@@ -60,8 +60,15 @@ app.post('/api/payment/initiate', async (req, res) => {
     }
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`🔥 Servidor Backend rodando na porta ${PORT}`);
-    console.log(`💳 Rota de pagamentos ativa: http://localhost:${PORT}/api/payment/initiate`);
-});
+const PORT = process.env.PORT || 3000;
+
+// Esta verificação garante que o app.listen só roda no seu computador (local)
+// No Vercel, ele ignora isso e usa o "module.exports"
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🔥 Servidor Backend rodando na porta ${PORT}`);
+    });
+}
+
+// OBRIGATÓRIO PARA O VERCEL: Exportar o app
+module.exports = app;
