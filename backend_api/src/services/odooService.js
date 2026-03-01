@@ -9,7 +9,7 @@ const mockProducts = [
         price: 5500,
         qty: 120,
         description: "Mármore italiano branco com veios cinzas distintos.",
-        image: "https://i.pinimg.com/736x/4c/ad/ca/4cadca1e8a0c78cb1ef29247c75893c3.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/4c/ad/ca/4cadca1e8a0c78cb1ef29247c75893c3.jpg"
     },
     {
         id: 5,
@@ -18,7 +18,7 @@ const mockProducts = [
         price: 6800,
         qty: 45,
         description: "Mármore preto profundo com veios brancos contrastantes.",
-        image: "https://i.pinimg.com/1200x/ee/05/cf/ee05cf222eaf436788470575d05ceb30.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/1200x/ee/05/cf/ee05cf222eaf436788470575d05ceb30.jpg"
     },
 
     // --- GRANITOS ---
@@ -29,7 +29,7 @@ const mockProducts = [
         price: 3200,
         qty: 50,
         description: "Pedra de alta resistência e cor profunda.",
-        image: "https://i.pinimg.com/736x/70/e9/3e/70e93e65335f48e7ebdecb8870252f60.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/70/e9/3e/70e93e65335f48e7ebdecb8870252f60.jpg"
     },
     {
         id: 6,
@@ -38,7 +38,7 @@ const mockProducts = [
         price: 2100,
         qty: 200,
         description: "Granito clássico, resistente e com ótimo custo-benefício.",
-        image: "https://i.pinimg.com/736x/b7/1f/c5/b71fc52078a009c80fb02ec848ab9988.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/b7/1f/c5/b71fc52078a009c80fb02ec848ab9988.jpg"
     },
 
     // --- QUARTZO ---
@@ -49,7 +49,7 @@ const mockProducts = [
         price: 8000,
         qty: 15,
         description: "Superfície manufaturada com veios dourados luxuosos.",
-        image: "https://i.pinimg.com/736x/c0/12/5b/c0125b46812ae248c1506885eaf92ca0.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/c0/12/5b/c0125b46812ae248c1506885eaf92ca0.jpg"
     },
     {
         id: 7,
@@ -58,7 +58,7 @@ const mockProducts = [
         price: 7500,
         qty: 80,
         description: "Quartzo cinza moderno com pequenos pontos de brilho.",
-        image: "https://i.pinimg.com/736x/7a/d9/87/7ad987b5eeb0e216fa08c13dafb72edb.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/7a/d9/87/7ad987b5eeb0e216fa08c13dafb72edb.jpg"
     },
 
     // --- ÔNIX E TRAVERTINO ---
@@ -69,7 +69,7 @@ const mockProducts = [
         price: 6100,
         qty: 30,
         description: "Clássico, rústico e elegante.",
-        image: "https://i.pinimg.com/1200x/fb/7f/68/fb7f68a626523565ebb29f8b68a39d2d.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/1200x/fb/7f/68/fb7f68a626523565ebb29f8b68a39d2d.jpg"
     },
     {
         id: 8,
@@ -78,7 +78,7 @@ const mockProducts = [
         price: 12000,
         qty: 10,
         description: "Pedra exótica que permite a passagem de luz. Luxo puro.",
-        image: "https://i.pinimg.com/736x/90/9a/ca/909aca0dbcead5849f9ab85004181857.jpg"
+        image: "https://images.weserv.nl/?url=i.pinimg.com/736x/90/9a/ca/909aca0dbcead5849f9ab85004181857.jpg"
     }
 ];
 
