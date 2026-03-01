@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui'; // Necessário para o efeito de vidro (Blur)
-import 'cart_service.dart'; // <--- 1. IMPORTANTE: Importar o serviço do carrinho
+import 'dart:ui';
+import 'cart_service.dart';
+import 'favorites_service.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+// Agora é um StatefulWidget para permitir a mudança visual do ícone de coração
+class ProductDetailScreen extends StatefulWidget {
   final Map<String, dynamic> product;
 
   const ProductDetailScreen({super.key, required this.product});
 
   @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final FavoritesService favoritesService = FavoritesService();
+
+  @override
   Widget build(BuildContext context) {
-    // Altura da imagem (55% da tela, como no HTML)
     final double imageHeight = MediaQuery.of(context).size.height * 0.55;
+    // Atalho para facilitar a leitura do código
+    final product = widget.product;
 
     return Scaffold(
-      backgroundColor: Colors.white, // Fundo branco quando rola para baixo
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // 1. IMAGEM HERO (Fundo)
+          // 1. IMAGEM HERO
           Positioned(
             top: 0,
             left: 0,
@@ -33,12 +43,14 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                 ),
                 child: Container(
-                  // Gradiente leve para o texto branco do topo aparecer
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.black.withOpacity(0.3), Colors.transparent],
+                      colors: [
+                        Colors.black.withOpacity(0.3),
+                        Colors.transparent,
+                      ],
                       stops: const [0.0, 0.4],
                     ),
                   ),
@@ -49,19 +61,22 @@ class ProductDetailScreen extends StatelessWidget {
 
           // 2. CONTEÚDO (Sheet Flutuante)
           SingleChildScrollView(
-            padding: EdgeInsets.only(top: imageHeight - 50), // Começa um pouco antes da imagem acabar
+            padding: EdgeInsets.only(top: imageHeight - 50),
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
                 boxShadow: [
-                  BoxShadow(color: Colors.black12, blurRadius: 20, offset: Offset(0, -5)),
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 20,
+                    offset: Offset(0, -5),
+                  ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Pequena barra de "pega" (Handle bar)
                   Center(
                     child: Container(
                       margin: const EdgeInsets.only(top: 12),
@@ -75,11 +90,10 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 100), // Padding inferior grande p/ botão fixo
+                    padding: const EdgeInsets.fromLTRB(24, 20, 24, 100),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Título e Preço
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,10 +105,10 @@ class ProductDetailScreen extends StatelessWidget {
                                   Text(
                                     product['name'],
                                     style: GoogleFonts.lato(
-                                      fontSize: 28, 
-                                      fontWeight: FontWeight.w900, 
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w900,
                                       height: 1.1,
-                                      color: Colors.black87
+                                      color: Colors.black87,
                                     ),
                                   ),
                                   const SizedBox(height: 8),
@@ -104,16 +118,16 @@ class ProductDetailScreen extends StatelessWidget {
                                         TextSpan(
                                           text: "MZN ${product['price']}",
                                           style: GoogleFonts.lato(
-                                            fontSize: 22, 
-                                            fontWeight: FontWeight.w900, 
-                                            color: const Color(0xFFD4AF37)
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w900,
+                                            color: const Color(0xFFD4AF37),
                                           ),
                                         ),
                                         TextSpan(
                                           text: " / m²",
                                           style: GoogleFonts.lato(
-                                            fontSize: 14, 
-                                            color: Colors.grey[500]
+                                            fontSize: 14,
+                                            color: Colors.grey[500],
                                           ),
                                         ),
                                       ],
@@ -122,7 +136,6 @@ class ProductDetailScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            // Botão de Zoom (Simulado visualmente)
                             Container(
                               height: 50,
                               width: 50,
@@ -131,28 +144,35 @@ class ProductDetailScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFFD4AF37).withOpacity(0.4),
+                                    color: const Color(
+                                      0xFFD4AF37,
+                                    ).withOpacity(0.4),
                                     blurRadius: 10,
                                     offset: const Offset(0, 5),
                                   ),
                                 ],
                               ),
-                              child: const Icon(Icons.zoom_in, color: Colors.white, size: 28),
+                              child: const Icon(
+                                Icons.zoom_in,
+                                color: Colors.white,
+                                size: 28,
+                              ),
                             ),
                           ],
                         ),
 
                         const SizedBox(height: 25),
-
-                        // Descrição
                         Text(
-                          product['description'] ?? "Uma obra-prima natural selecionada manualmente das melhores pedreiras. Veios ousados com tons sutis, oferecendo elegância inigualável para interiores de luxo.",
-                          style: GoogleFonts.lato(fontSize: 16, color: Colors.grey[600], height: 1.6),
+                          product['description'] ??
+                              "Uma obra-prima natural selecionada manualmente das melhores pedreiras.",
+                          style: GoogleFonts.lato(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                            height: 1.6,
+                          ),
                         ),
 
                         const SizedBox(height: 30),
-
-                        // Grid de Especificações
                         GridView.count(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -161,42 +181,27 @@ class ProductDetailScreen extends StatelessWidget {
                           mainAxisSpacing: 15,
                           childAspectRatio: 2.2,
                           children: const [
-                            _SpecBox(title: "ORIGEM", value: "Carrara, Itália", icon: Icons.location_on),
-                            _SpecBox(title: "ESPESSURA", value: "20mm - 30mm", icon: Icons.straighten),
-                            _SpecBox(title: "ACABAMENTO", value: "Polido / Fosco", icon: Icons.shutter_speed),
-                            _SpecBox(title: "DUREZA", value: "3-4 Escala Mohs", icon: Icons.diamond),
+                            _SpecBox(
+                              title: "ORIGEM",
+                              value: "Carrara, Itália",
+                              icon: Icons.location_on,
+                            ),
+                            _SpecBox(
+                              title: "ESPESSURA",
+                              value: "20mm - 30mm",
+                              icon: Icons.straighten,
+                            ),
+                            _SpecBox(
+                              title: "ACABAMENTO",
+                              value: "Polido / Fosco",
+                              icon: Icons.shutter_speed,
+                            ),
+                            _SpecBox(
+                              title: "DUREZA",
+                              value: "3-4 Escala Mohs",
+                              icon: Icons.diamond,
+                            ),
                           ],
-                        ),
-
-                        const SizedBox(height: 30),
-
-                        // Galeria Horizontal
-                        Text(
-                          "CORTES ALTERNATIVOS",
-                          style: GoogleFonts.lato(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey[400], letterSpacing: 1.5),
-                        ),
-                        const SizedBox(height: 15),
-                        SizedBox(
-                          height: 80,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                width: 80,
-                                margin: const EdgeInsets.only(right: 15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    image: NetworkImage(product['image']),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment(index * 0.3, 0),
-                                  ),
-                                  border: Border.all(color: Colors.grey[200]!),
-                                ),
-                              );
-                            },
-                          ),
                         ),
                       ],
                     ),
@@ -206,14 +211,17 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ),
 
-          // 3. BARRA SUPERIOR (Glassmorphism)
+          // 3. BARRA SUPERIOR (Ação de Favorito aqui)
           Positioned(
             top: 0,
             left: 0,
             right: 0,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -223,7 +231,32 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        _GlassButton(icon: Icons.favorite_border, onTap: () {}),
+                        // --- AQUI ESTÁ A AÇÃO DE FAVORITOS ---
+                        ListenableBuilder(
+                          listenable: favoritesService,
+                          builder: (context, child) {
+                            final isFav = favoritesService.isFavorite(product);
+                            return _GlassButton(
+                              icon: isFav
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              iconColor: isFav ? Colors.red : Colors.white,
+                              onTap: () {
+                                favoritesService.toggleFavorite(product);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      isFav
+                                          ? "Removido dos favoritos"
+                                          : "Adicionado aos favoritos",
+                                    ),
+                                    duration: const Duration(seconds: 1),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                         const SizedBox(width: 10),
                         _GlassButton(icon: Icons.share, onTap: () {}),
                       ],
@@ -234,7 +267,7 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ),
 
-          // 4. BARRA DE AÇÃO INFERIOR (Sticky)
+          // 4. BARRA DE AÇÃO INFERIOR
           Positioned(
             bottom: 0,
             left: 0,
@@ -246,63 +279,76 @@ class ProductDetailScreen extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [Colors.white, Colors.white.withOpacity(0.9), Colors.transparent],
+                  colors: [
+                    Colors.white,
+                    Colors.white.withOpacity(0.9),
+                    Colors.transparent,
+                  ],
                   stops: const [0.5, 0.8, 1.0],
                 ),
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  // --- 2. LÓGICA DO CARRINHO AQUI ---
                   CartService().addToCart(product);
-
-                  // Feedback visual (SnackBar Bonita)
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       backgroundColor: Colors.black,
                       content: Row(
-                        children: const [
+                        children: [
                           Icon(Icons.check_circle, color: Color(0xFFD4AF37)),
                           SizedBox(width: 10),
-                          Text("Pedra adicionada à cotação!", style: TextStyle(color: Colors.white)),
+                          Text("Adicionado à cotação!"),
                         ],
                       ),
-                      duration: const Duration(seconds: 2),
-                    )
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  elevation: 10,
-                  shadowColor: Colors.black45,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "ADICIONAR À COTAÇÃO",
-                      style: GoogleFonts.lato(color: const Color(0xFFD4AF37), fontWeight: FontWeight.w900, letterSpacing: 1.5),
+                      style: GoogleFonts.lato(
+                        color: const Color(0xFFD4AF37),
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1.5,
+                      ),
                     ),
                     const SizedBox(width: 10),
-                    const Icon(Icons.arrow_forward, color: Color(0xFFD4AF37), size: 20),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Color(0xFFD4AF37),
+                      size: 20,
+                    ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
 
-// Widget auxiliar para os botões de vidro (Blur)
+// Widget auxiliar atualizado para suportar cores dinâmicas no ícone
 class _GlassButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onTap;
+  final Color iconColor;
 
-  const _GlassButton({required this.icon, required this.onTap});
+  const _GlassButton({
+    required this.icon,
+    required this.onTap,
+    this.iconColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +365,7 @@ class _GlassButton extends StatelessWidget {
               color: Colors.white.withOpacity(0.2),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.white, size: 20),
+            child: Icon(icon, color: iconColor, size: 20),
           ),
         ),
       ),
@@ -327,13 +373,15 @@ class _GlassButton extends StatelessWidget {
   }
 }
 
-// Widget auxiliar para a Grid de Especificações
 class _SpecBox extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
-
-  const _SpecBox({required this.title, required this.value, required this.icon});
+  const _SpecBox({
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -350,7 +398,12 @@ class _SpecBox extends StatelessWidget {
         children: [
           Text(
             title,
-            style: GoogleFonts.lato(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.grey[400], letterSpacing: 1.0),
+            style: GoogleFonts.lato(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[400],
+              letterSpacing: 1.0,
+            ),
           ),
           const SizedBox(height: 5),
           Row(
@@ -360,7 +413,11 @@ class _SpecBox extends StatelessWidget {
               Expanded(
                 child: Text(
                   value,
-                  style: GoogleFonts.lato(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+                  style: GoogleFonts.lato(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

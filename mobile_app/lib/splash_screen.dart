@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'main.dart';
+import 'image_helper.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,25 +11,29 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // 1. Fundo de Mármore (Sua imagem nova)
+          // 1. Fundo de Mármore
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage("https://i.pinimg.com/736x/31/ae/56/31ae567a4fed2c0a32c714930953eb11.jpg"),
+                image: NetworkImage(
+                  proxyImage(
+                    "https://i.pinimg.com/736x/31/ae/56/31ae567a4fed2c0a32c714930953eb11.jpg",
+                  ),
+                ),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          
-          // 2. Filtro Escuro (Gradiente para leitura)
+
+          // 2. Filtro Escuro
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.3), // Mais suave em cima
-                  Colors.black.withOpacity(0.8), // Mais escuro em baixo
+                  Colors.black.withOpacity(0.3),
+                  Colors.black.withOpacity(0.8),
                 ],
               ),
             ),
@@ -39,37 +44,39 @@ class SplashScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(flex: 3), // Empurra o logo um pouco para baixo
-                
-                // Ícone Decorativo (Compasso/Arquitetura)
-                const Icon(
-                  Icons.architecture, 
-                  color: Colors.white70, 
-                  size: 40
-                ),
-                
+                const Spacer(flex: 3),
+                const Icon(Icons.architecture, color: Colors.white70, size: 40),
                 const SizedBox(height: 10),
-
-                // LOGO PEMARO
                 Text(
-                  "PEMARO",
+                  "Stone Trading",
                   style: GoogleFonts.lato(
                     fontSize: 48,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
                     letterSpacing: 8.0,
-                    shadows: [
-                      const Shadow(color: Colors.black45, blurRadius: 20, offset: Offset(0, 5))
+                    shadows: const [
+                      Shadow(
+                        color: Colors.black45,
+                        blurRadius: 20,
+                        offset: Offset(0, 5),
+                      ),
                     ],
                   ),
                 ),
-                
-                // Divisor Dourado (Linhas ao lado do texto)
+
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                    vertical: 10,
+                  ),
                   child: Row(
                     children: [
-                      Expanded(child: Container(height: 1, color: const Color(0xFFD4AF37))),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: const Color(0xFFD4AF37),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
@@ -77,65 +84,70 @@ class SplashScreen extends StatelessWidget {
                           style: GoogleFonts.lato(
                             fontSize: 10,
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFFD4AF37), // Dourado
+                            color: const Color(0xFFD4AF37),
                             letterSpacing: 3.0,
                           ),
                         ),
                       ),
-                      Expanded(child: Container(height: 1, color: const Color(0xFFD4AF37))),
+                      Expanded(
+                        child: Container(
+                          height: 1,
+                          color: const Color(0xFFD4AF37),
+                        ),
+                      ),
                     ],
                   ),
                 ),
 
                 const Spacer(flex: 3),
 
-                // Frase de Excelência (Acima do botão)
                 Text(
                   "EXCELÊNCIA EM MÁRMORE & GRANITO",
                   style: GoogleFonts.lato(
                     fontSize: 10,
                     color: Colors.white70,
                     letterSpacing: 1.5,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
 
-                // Botão de Entrar (ARREDONDADO IGUAL AO STITCH)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const ShowroomScreen()),
+                        MaterialPageRoute(
+                          // ✅ CORRIGIDO: Navega para MainNavigation (que tem a NavBar)
+                          builder: (context) => const MainNavigation(),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFD4AF37), // Dourado
-                      foregroundColor: Colors.black, // Texto Preto
+                      backgroundColor: const Color(0xFFD4AF37),
+                      foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       elevation: 10,
                       shadowColor: const Color(0xFFD4AF37).withOpacity(0.4),
-                      // AQUI ESTÁ A MUDANÇA: Arredondado (30) em vez de Quadrado (0)
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30), 
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
-                          "ENTRAR NA GALERIA", 
+                          "ENTRAR NA GALERIA",
                           style: TextStyle(
-                            fontWeight: FontWeight.w900, 
+                            fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
-                            fontSize: 14
-                          )
+                            fontSize: 14,
+                          ),
                         ),
                         SizedBox(width: 10),
-                        Icon(Icons.arrow_forward_ios, size: 14), // Seta mais elegante
+                        Icon(Icons.arrow_forward_ios, size: 14),
                       ],
                     ),
                   ),
@@ -143,25 +155,40 @@ class SplashScreen extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                // RODAPÉ (Informações extras do design)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           Icon(Icons.public, color: Colors.white54, size: 12),
                           SizedBox(width: 5),
-                          Text("EDIÇÃO INTERNACIONAL", style: TextStyle(color: Colors.white54, fontSize: 10)),
+                          Text(
+                            "EDIÇÃO INTERNACIONAL",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 10,
+                            ),
+                          ),
                         ],
                       ),
-                      Container(width: 1, height: 15, color: Colors.white24), // Separador vertical
-                      Row(
-                        children: const [
-                          Icon(Icons.verified_user_outlined, color: Colors.white54, size: 12),
+                      Container(width: 1, height: 15, color: Colors.white24),
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.verified_user_outlined,
+                            color: Colors.white54,
+                            size: 12,
+                          ),
                           SizedBox(width: 5),
-                          Text("AUTENTICIDADE GARANTIDA", style: TextStyle(color: Colors.white54, fontSize: 10)),
+                          Text(
+                            "AUTENTICIDADE GARANTIDA",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 10,
+                            ),
+                          ),
                         ],
                       ),
                     ],

@@ -14,7 +14,7 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final CartService cart = CartService();
   final ApiService api = ApiService(); // Instância da API
-  
+
   String _selectedMethod = "mpesa"; // Padrão: M-Pesa
   final TextEditingController _phoneController = TextEditingController();
   bool _isProcessing = false;
@@ -33,12 +33,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black,
+            size: 20,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           "Pagamento Seguro",
-          style: GoogleFonts.lato(color: Colors.black, fontWeight: FontWeight.w900),
+          style: GoogleFonts.lato(
+            color: Colors.black,
+            fontWeight: FontWeight.w900,
+          ),
         ),
         centerTitle: true,
       ),
@@ -51,11 +58,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Center(
               child: Column(
                 children: [
-                  Text("Total a Pagar", style: TextStyle(color: Colors.grey[500], fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.0)),
+                  Text(
+                    "Total a Pagar",
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
                   const SizedBox(height: 5),
                   Text(
                     "MZN ${cart.total.toStringAsFixed(0)}",
-                    style: GoogleFonts.lato(fontSize: 32, fontWeight: FontWeight.w900, color: const Color(0xFFD4AF37)),
+                    style: GoogleFonts.lato(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      color: const Color(0xFFD4AF37),
+                    ),
                   ),
                 ],
               ),
@@ -63,9 +82,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             const SizedBox(height: 40),
 
             // 2. SELEÇÃO DE MÉTODO
-            Text("Escolha o Método", style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87)),
+            Text(
+              "Escolha o Método",
+              style: GoogleFonts.lato(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
             const SizedBox(height: 15),
-            
+
             // Cartão M-Pesa
             _PaymentMethodCard(
               id: "mpesa",
@@ -77,7 +103,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               onTap: () => setState(() => _selectedMethod = "mpesa"),
             ),
             const SizedBox(height: 10),
-            
+
             // Cartão E-Mola
             _PaymentMethodCard(
               id: "emola",
@@ -107,28 +133,54 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             if (_selectedMethod == "mpesa" || _selectedMethod == "emola") ...[
               Text(
                 "Número de Telefone (${_selectedMethod == 'mpesa' ? 'Vodacom' : 'Movitel'})",
-                style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+                style: GoogleFonts.lato(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
               const SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFD4AF37).withOpacity(0.5)),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+                  border: Border.all(
+                    color: const Color(0xFFD4AF37).withOpacity(0.5),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
                     // Bandeira MZ (Simulada) e código
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(6)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(6),
+                      ),
                       child: Row(
                         children: const [
                           Text("🇲🇿", style: TextStyle(fontSize: 20)),
                           SizedBox(width: 5),
-                          Text("+258", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54)),
+                          Text(
+                            "+258",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -138,9 +190,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       child: TextField(
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.5),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                        ),
                         decoration: InputDecoration(
-                          hintText: _selectedMethod == "mpesa" ? "84/85..." : "86/87...",
+                          hintText: _selectedMethod == "mpesa"
+                              ? "84/85..."
+                              : "86/87...",
                           border: InputBorder.none,
                           hintStyle: TextStyle(color: Colors.grey[300]),
                         ),
@@ -161,31 +219,56 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ],
         ),
       ),
-      
+
       // 4. BOTÃO DE PAGAR
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20, offset: const Offset(0, -5))]),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 20,
+              offset: const Offset(0, -5),
+            ),
+          ],
+        ),
         child: SafeArea(
           child: ElevatedButton(
-            onPressed: _isProcessing ? null : _processPayment, // Bloqueia se estiver processando
+            onPressed: _isProcessing
+                ? null
+                : _processPayment, // Bloqueia se estiver processando
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFD4AF37),
               padding: const EdgeInsets.symmetric(vertical: 18),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               elevation: 5,
             ),
-            child: _isProcessing 
-              ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-              : Text(
-                  "PAGAR MZN ${cart.total.toStringAsFixed(0)}",
-                  style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w900, color: Colors.white, letterSpacing: 1.0),
-                ),
+            child: _isProcessing
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text(
+                    "PAGAR MZN ${cart.total.toStringAsFixed(0)}",
+                    style: GoogleFonts.lato(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
           ),
         ),
       ),
@@ -196,14 +279,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void _processPayment() async {
     // 1. Validação do Input
     String phone = _phoneController.text.trim();
-    
+
     // Se for M-Pesa ou E-Mola, precisa de 9 dígitos (ex: 841234567)
     if ((_selectedMethod == "mpesa" || _selectedMethod == "emola")) {
       if (phone.isEmpty || phone.length < 9) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.redAccent,
-          content: Text("Erro: Insira um número válido (9 dígitos)."),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text("Erro: Insira um número válido (9 dígitos)."),
+          ),
+        );
         return;
       }
     }
@@ -223,31 +308,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       // 4. Sucesso!
       if (mounted) {
         setState(() => _isProcessing = false);
-        
+
         // Vamos para a tela de sucesso
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const SuccessScreen()),
         );
       }
-
     } catch (e) {
       // 5. Erro (Ex: Falha de conexão ou Backend offline)
       if (mounted) {
         setState(() => _isProcessing = false);
-        
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.red[800],
-          content: Row(
-            children: [
-              const Icon(Icons.error, color: Colors.white),
-              const SizedBox(width: 10),
-              // Mostra a mensagem de erro limpa
-              Expanded(child: Text(e.toString().replaceAll("Exception: ", ""))),
-            ],
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red[800],
+            content: Row(
+              children: [
+                const Icon(Icons.error, color: Colors.white),
+                const SizedBox(width: 10),
+                // Mostra a mensagem de erro limpa
+                Expanded(
+                  child: Text(e.toString().replaceAll("Exception: ", "")),
+                ),
+              ],
+            ),
+            duration: const Duration(seconds: 4),
           ),
-          duration: const Duration(seconds: 4),
-        ));
+        );
       }
     }
   }
@@ -264,7 +352,13 @@ class _PaymentMethodCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const _PaymentMethodCard({
-    required this.id, required this.name, required this.description, required this.color, required this.icon, required this.isSelected, required this.onTap
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.color,
+    required this.icon,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
@@ -283,9 +377,17 @@ class _PaymentMethodCard extends StatelessWidget {
           ),
           boxShadow: [
             if (isSelected)
-              BoxShadow(color: const Color(0xFFD4AF37).withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 4))
+              BoxShadow(
+                color: const Color(0xFFD4AF37).withOpacity(0.2),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              )
             else
-              BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 5, offset: const Offset(0, 2))
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
           ],
         ),
         child: Row(
@@ -305,8 +407,17 @@ class _PaymentMethodCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name, style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.bold)),
-                  Text(description, style: TextStyle(fontSize: 12, color: Colors.grey[500])),
+                  Text(
+                    name,
+                    style: GoogleFonts.lato(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    description,
+                    style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                  ),
                 ],
               ),
             ),
@@ -316,11 +427,20 @@ class _PaymentMethodCard extends StatelessWidget {
               height: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: isSelected ? const Color(0xFFD4AF37) : Colors.grey[300]!, width: 2),
-                color: isSelected ? const Color(0xFFD4AF37) : Colors.transparent,
+                border: Border.all(
+                  color: isSelected
+                      ? const Color(0xFFD4AF37)
+                      : Colors.grey[300]!,
+                  width: 2,
+                ),
+                color: isSelected
+                    ? const Color(0xFFD4AF37)
+                    : Colors.transparent,
               ),
-              child: isSelected ? const Icon(Icons.check, size: 14, color: Colors.white) : null,
-            )
+              child: isSelected
+                  ? const Icon(Icons.check, size: 14, color: Colors.white)
+                  : null,
+            ),
           ],
         ),
       ),
