@@ -1,5 +1,5 @@
 // src/controllers/productController.js
-const odooService = require('../services/odooService');
+const odooService = require('../../services/odooService');
 
 exports.getAllProducts = async (req, res) => {
     try {
